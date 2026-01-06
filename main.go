@@ -1,23 +1,17 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"os/exec"
-	"runtime"
-	"strconv"
-	"strings"
-	"unicode"
 )
 
 func main() {
 	fmt.Println("Ну хеллоу :) Это моя первая программа, хоть и без гпт никуда.")
 	fmt.Println("Как ты мог увидеть, странные числа в папке, попробуй сделать результат равный им")
 	fmt.Println("Напиши 'помощь' для списка команд.")
+	fmt.Println("а тут первый тест")
 
 	reader := bufio.NewReader(os.Stdin)
-	history := []string{} 
+	history := []string{}
 
 	for {
 		fmt.Print("calc> ")
@@ -56,14 +50,13 @@ func main() {
 
 		result, err := eval(line)
 		if err != nil {
-			fmt.Println("\033[31mОшибка:", err, "\033[0m") 
+			fmt.Println("\033[31mОшибка:", err, "\033[0m")
 			continue
 		}
 
-		fmt.Println("\033[32mРезультат:", result, "\033[0m") 
+		fmt.Println("\033[32mРезультат:", result, "\033[0m")
 		history = append(history, fmt.Sprintf("%s = %v", line, result))
 
-		
 		switch result {
 		case 52:
 			playMusic("52.mp3")
@@ -74,7 +67,6 @@ func main() {
 		}
 	}
 }
-
 
 func eval(expr string) (float64, error) {
 	tokens, err := tokenize(expr)
@@ -93,7 +85,7 @@ func eval(expr string) (float64, error) {
 func tokenize(expr string) ([]string, error) {
 	var tokens []string
 	var number strings.Builder
-	prev := "" 
+	prev := ""
 
 	for i, ch := range expr {
 		if !unicode.IsDigit(ch) && ch != '.' && ch != '+' && ch != '-' && ch != '*' && ch != '/' && ch != '(' && ch != ')' {
@@ -236,7 +228,6 @@ func isNumber(s string) bool {
 	_, err := strconv.ParseFloat(s, 64)
 	return err == nil
 }
-
 
 func clearScreen() {
 	if runtime.GOOS == "windows" {
